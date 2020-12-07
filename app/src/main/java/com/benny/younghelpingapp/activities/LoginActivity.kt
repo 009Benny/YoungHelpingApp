@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
             if ( Patterns.EMAIL_ADDRESS.matcher(email).matches() ) {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        checkUser()
+                        Toast.makeText(baseContext, "Usuario Loggeado!", Toast.LENGTH_LONG).show()
                     }else{
                         task.exception?.let {
                             Toast.makeText(baseContext, it.message, Toast.LENGTH_LONG).show()
