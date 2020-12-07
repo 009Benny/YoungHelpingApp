@@ -5,14 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.benny.younghelpingapp.R
+import com.benny.younghelpingapp.models.YHUser
+import kotlinx.android.synthetic.main.user_item.view.*
 
-class UseritemAdapter: RecyclerView.Adapter<UseritemAdapter.UseritemViewHolder>() {
+class UseritemAdapter(val chatClick: (YHUser) -> Unit): RecyclerView.Adapter<UseritemAdapter.UseritemViewHolder>() {
 
     class UseritemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-    var listOfUser:List<String> = emptyList()
+    var listOfUser:List<YHUser> = emptyList()
 
-    fun setListOfNames(list: List<String>){
-        listOfUser = list
+    fun setData(list: List<YHUser>){
+        this.listOfUser = list
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UseritemViewHolder {
@@ -20,8 +23,17 @@ class UseritemAdapter: RecyclerView.Adapter<UseritemAdapter.UseritemViewHolder>(
     }
 
     override fun onBindViewHolder(holder: UseritemViewHolder, position: Int) {
-        var name = listOfUser[position]
-//        holder.itemView
+        var user = listOfUser[position]
+        holder.itemView.lblNameItemUser.text = user.name.toString()
+        holder.itemView.lblRsumenItemUser.text = user.summary.toString()
+        if (user.helper){
+            holder.itemView.imgBullet.setImageResource(R.drawable.red_circle)
+        }else{
+            holder.itemView.imgBullet.setImageResource(R.drawable.blue_circle)
+        }
+        holder.itemView.btnMessageItemUser.setOnClickListener {
+            chatClick(user)
+        }
     }
 
     override fun getItemCount(): Int {

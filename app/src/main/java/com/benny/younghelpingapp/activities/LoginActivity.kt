@@ -1,13 +1,13 @@
 package com.benny.younghelpingapp.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.benny.younghelpingapp.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -22,11 +22,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         val buttonLoggin = findViewById(R.id.btnLogin) as Button
         val buttonRegister = findViewById(R.id.btnRegister) as Button
+        val buttonInfo = findViewById(R.id.btnInfo) as Button
         this.textFieldEmail = findViewById(R.id.textFieldEmail) as EditText
         this.textFieldPasword = findViewById(R.id.textFieldPassword) as EditText
         buttonLoggin.setOnClickListener { loginUser() }
         buttonRegister.setOnClickListener { showRegisterUser() }
-
+        buttonInfo.setOnClickListener { btnInfo() }
         checkUser()
     }
 
@@ -34,27 +35,11 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUser(){
         val currentUser = auth.currentUser
         if(currentUser != null){
-//            val intent = Intent(this, ListUsers::class.java)
-//            intent.putExtra("user", currentUser.email)
-//            startActivity(intent)
-//            finish()
+            val intent = Intent(this, ListUsersActivity::class.java)
+            intent.putExtra("user", currentUser.email)
+            startActivity(intent)
+            finish()
         }
-    }
-
-    private fun createUser(){
-//        val email = emailText.text.toString()
-//        val password = passwordText.text.toString()
-//
-//        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-//            if(task.isSuccessful){
-//                checkUser()
-//            } else {
-//                task.exception?.let {
-//                    Toast.makeText(baseContext, it.message, Toast.LENGTH_LONG).show()
-//                }
-//            }
-//
-//        }
     }
 
     private fun showRegisterUser(){
@@ -71,6 +56,7 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(baseContext, "Usuario Loggeado!", Toast.LENGTH_LONG).show()
+                        this.checkUser()
                     }else{
                         task.exception?.let {
                             Toast.makeText(baseContext, it.message, Toast.LENGTH_LONG).show()
@@ -84,6 +70,12 @@ class LoginActivity : AppCompatActivity() {
                 builder.show()
             }
         }
+    }
+
+    private fun btnInfo(){
+        val intent = Intent(this, InfoActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

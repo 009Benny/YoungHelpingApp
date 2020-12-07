@@ -1,7 +1,6 @@
 package com.benny.younghelpingapp.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -10,12 +9,11 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.benny.younghelpingapp.R
-import com.benny.younghelpingapp.models.YHUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import java.util.*
 
 class RegisterUserActivity : AppCompatActivity() {
     private var textFieldEmail: EditText? = null
@@ -26,7 +24,7 @@ class RegisterUserActivity : AppCompatActivity() {
     private var textFieldAddress: EditText? = null
     private var textFieldCity: EditText? = null
     private var switchHelp: Switch? = null
-    val db = FirebaseFirestore.getInstance()
+    private val db = FirebaseFirestore.getInstance()
     private val auth = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle?) {
